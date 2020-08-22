@@ -1,0 +1,32 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'edit-create.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Hello {{user.first_name}}! Let's edit your wish!</h1>
+        <a href="/logOut">Log out</a>
+    </header>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <form action="/wishes/edit/{{wish.id}}/changeDatBase" method="post">
+        {% csrf_token %}
+        <label>I wish for:</label>
+        <input type="text" name="wish_title" value="{{wish.wish_title}}"/> <br />
+        <label>Description</label>
+        <textarea name="wish_desc">{{wish.desc}}</textarea> <br />
+        <button type="submit" name="button" value="add">Add</button>
+        <button type="submit" name="button" value="cancel">Cancel</button>
+    </form>
+</body>
+</html>

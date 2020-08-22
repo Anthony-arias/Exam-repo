@@ -1,0 +1,33 @@
+body
+{
+    width: 970px;
+    margin: 0 auto;
+    
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: solid;
+    border-color: black;
+}
+
+td, th {
+    border: 1px solid black;
+    text-align: left;
+    padding: 8px;
+}
+
+tr:nth-child(even) {
+    background-color: #dddddd;
+}
+
+th {
+    background-color: #CCCCCC;
+}

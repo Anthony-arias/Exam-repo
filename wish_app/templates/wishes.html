@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'wishes.css' %}">
+</head>
+<body>
+    <header>
+        <h1>Hello {{user.first_name}}!</h1>
+        <a href="/logOut">Log out</a>
+        <a href="/wishes/stats"><button>View stats</button></a>
+        <a href="/wishes/new"><button>Make a wish!</button></a>
+    </header>
+    <div id="users-wish-list">
+        <h3>Your wish list:</h3>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Date Added</th>
+                <th>Actions</th>
+            </tr>
+            {% for wish in user.wishes.all %}
+                <tr>
+                    {% if wish.granted == False %}
+                    <td>{{wish.wish_title}}</td>
+                    <td>{{wish.created_at}}</td>
+                    <td><p><a href="wishes/remove/{{wish.id}}">Remove</a> | <a href="/wishes/edit/{{wish.id}}">Edit</a> | <a href="/wishes/grant/{{wish.id}}">Granted</a></p></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div id="granted-wishes:">
+        <h3>Granted wishes:</h3>
+        <table>
+            <tr>
+                <th>Item</th>
+                <th>Wisher</th>
+                <th>Date Added</th>
+                <th>Date granted</th>
+                <th>Likes</th>
+                <th>Actions</th>
+            </tr>
+            {% for wish in wishes %}
+                <tr>
+                    {% if wish.granted == True %}
+                        <td>{{wish.wish_title}}</td>
+                        <td>{{wish.upload_by.first_name}}</td>
+                        <td>{{wish.created_at}}</td>
+                        <td>{{wish.updated_at}}</td>
+                        
+                        {% for user in wish.users_who_like.all %}
+                            {% if forloop.last %}
+                                 <td>{{forloop.counter}}</td>
+                            {% endif %}
+                            {% empty %}
+                                <td>0</td>
+                        {% endfor %}
+                        
+                        {% if user in wish.users_who_like.all or user.id == wish.upload_by.id  %}
+                            <td>  </td>
+                        {% else %}
+                            <td><p><a href="/wishes/like/{{wish.id}}">Like</a></p></td>
+                        {% endif %}
+                    {% endif %}
+                
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+</body>
+</html>

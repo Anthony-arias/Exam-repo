@@ -1,0 +1,46 @@
+<html>
+<head>
+    <title></title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'login-register-style.css' %}">
+</head>
+<body>
+    <h1>Welcome! sign in to a make a wish!</h1>
+    {% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li {% if message.tags %} class="{{ message.tags }}" {% endif %}>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+    <div id="forms">
+        <form action="/login-register" id="register-form" method="post">
+            <h1>Registration</h1>
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="registration_form" />
+            <label>First Name</label>
+            <input type="text" name="first_name" /> <br />
+            <label>Last Name</label>
+            <input type="text" name="last_name" /> <br />
+            <label>Email</label>
+            <input type="email" name="user_email" /> <br />
+            <label>Password</label>
+            <input type="password" name="user_password" /> <br />
+            <label>Confirm PW</label>
+            <input type="password" name="user_confirm_pw" /> <br />
+            <button type="submit">Register</button>
+        </form>
+
+        <form action="/login-register" id="login-form" method="post">
+            <h1>Login</h1>
+            {% csrf_token %}
+            <input type="hidden" name="form_type" value="login_form" />
+            <label>Email</label>
+            <input type="email" name="user_email" /> <br />
+            <label>Password</label>
+            <input type="password" name="user_password" /> <br />
+            <button type="submit">Log in</button>
+        </form>
+    </div>
+</body>
+</html>
